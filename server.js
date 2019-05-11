@@ -5,8 +5,8 @@ var fileUpload = require('express-fileupload')
 var app = express()
 var bodyParser = require('body-parser')
 
-const HOST = 'localhost'
-const PORT = 8000
+const HOST = process.env.HOST || 'localhost'
+const PORT = process.env.PORT || 8000
 
 app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },

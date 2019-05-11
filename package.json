@@ -6,9 +6,9 @@
   "main": "server.js",
   "license": "UNLICENSED",
   "scripts": {
-    "prettierjs": "prettier --parser=babel --write 'src/**/*.js'",
-    "eslint": "eslint src",
-    "eslintfix": "eslint --fix src",
+    "prettierjs": "prettier --parser=babel --write '**/*.js'",
+    "eslint": "eslint .",
+    "eslintfix": "eslint --fix .",
     "start": "node server.js",
     "stop": "pkill -f api-gateway &2> /dev/null",
     "dev": "npm stop & rm -rf localhost & npm start",
@@ -18,8 +18,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "body-parser": "^1.18.3",
-    "amqplib": "^0.5.3",
-    "express-fileupload": "^1.1.4"
+    "amqplib": "^0.5.3"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

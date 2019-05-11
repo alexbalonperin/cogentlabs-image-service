@@ -1,0 +1,40 @@
+{
+  "name": "image-service",
+  "version": "1.0.0",
+  "description": "Cogent Labs Image Service",
+  "author": "Alexandre Balon-Perin<abalonperin1@gmail.com>",
+  "main": "server.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "prettierjs": "prettier --parser=babel --write 'src/**/*.js'",
+    "eslint": "eslint src",
+    "eslintfix": "eslint --fix src",
+    "start": "node server.js",
+    "stop": "pkill -f api-gateway &2> /dev/null",
+    "dev": "npm stop & rm -rf localhost & npm start",
+    "clean": "standard --fix & npm run prettierjs & npm run eslintfix",
+    "git-add": "git add -u"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "body-parser": "^1.18.3",
+    "amqplib": "^0.5.3",
+    "express-fileupload": "^1.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.0.1",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.17.0",
+    "standard": "*"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "pre-commit": [
+    "clean",
+    "git-add"
+  ]
+}

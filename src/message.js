@@ -6,15 +6,15 @@ class RabbitMQMessage {
     this.imagePath = imagePath
   }
 
-  getId() {
+  getId () {
     return this.id
   }
 
-  getImagePath() {
+  getImagePath () {
     return this.imagePath
   }
 
-  toString() {
+  toString () {
     return JSON.stringify({ id: this.id, image_path: this.imagePath })
   }
 }

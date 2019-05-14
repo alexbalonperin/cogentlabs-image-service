@@ -1,22 +1,22 @@
 'use strict'
 
-const redis = require("redis")
+const redis = require('redis')
 
-const redisClient = redis.createClient({host: "redis"});
-redisClient.on("error", function (err) {
-    console.log("Error " + err);
-});
+const redisClient = redis.createClient({ host: 'redis' })
+redisClient.on('error', function (err) {
+  console.log('Error ' + err)
+})
 
 class Redis {
-  set(key, value) {
+  set (key, value) {
     redisClient.set(key, value, redis.print)
   }
 
-  setNew(id) {
+  setNew (id) {
     this.set(id, 'new')
   }
 
-  setPublished(id) {
+  setPublished (id) {
     this.set(id, 'published')
   }
 }

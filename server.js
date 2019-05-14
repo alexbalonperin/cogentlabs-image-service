@@ -6,6 +6,8 @@ const app = express()
 const bodyParser = require('body-parser')
 const fs = require('fs')
 const Rabbit = require('./src/rabbit')
+const RabbitMQMessage = require('./src/message')
+const dstPath = '/tmp/uploads/'
 
 const rabbit = new Rabbit()
 rabbit.start()
@@ -25,16 +27,18 @@ app.get('/images/:id', (req, res) => {
 })
 
 app.post('/images', (req, res) => {
-  var hrTime = process.hrtime()
-  var id = hrTime[0] * 1000000 + hrTime[1] / 1000
-  var stream = fs.createWriteStream('/tmp/uploads/upload-' + id + '.jpg')
+  var hrTime = process.hrtime.bigint()
+  var id = hrTime
+  var imagePath = dstPath + 'upload-' + id
+  var stream = fs.createWriteStream(imagePath)
   req
     .on('data', chunk => {
       stream.write(chunk)
     })
     .on('end', () => {
       stream.end()
-      rabbit.publish('' + id)
+      var msg = new RabbitMQMessage("" + id, imagePath)
+      rabbit.publish(msg)
       console.log('DONE')
       res.send('DONE')
     })

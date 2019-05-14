@@ -1,6 +1,15 @@
 'use strict'
 
 const amqp = require('amqplib')
+const avro = require('avsc');
+
+const type = avro.Type.forSchema({
+  type: 'record',
+  fields: [
+    {name: 'id', type: 'string'},
+    {name: 'image_path', type: 'string'}
+  ]
+});
 
 const HOST = process.env.RABBIT_HOST || 'localhost'
 const USER = process.env.RABBIT_USER
@@ -26,7 +35,8 @@ class Rabbit {
       return conn.createConfirmChannel().then(ch => {
         var ok = ch.assertQueue(queue, { durable: true })
         return ok.then(() => {
-          ch.sendToQueue(queue, Buffer.from(msg), { deliveryMode: true })
+          const buf = type.toBuffer({id: msg.getId(), image_path: msg.getImagePath()})
+          ch.sendToQueue(queue, buf, { deliveryMode: true })
           console.log(" [x] Sent '%s'", msg)
           return ch.close()
         })

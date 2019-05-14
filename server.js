@@ -40,7 +40,7 @@ app.post('/images', (req, res) => {
       var msg = new RabbitMQMessage("" + id, imagePath)
       rabbit.publish(msg)
       console.log('DONE')
-      res.send('DONE')
+      res.send(JSON.stringify({id: id.toString()}))
     })
 })
 

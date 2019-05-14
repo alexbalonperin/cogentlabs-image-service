@@ -19,7 +19,8 @@
     "express": "^4.16.4",
     "body-parser": "^1.18.3",
     "amqplib": "^0.5.3",
-    "avsc": "^5.4.10"
+    "avsc": "^5.4.10",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

@@ -12,7 +12,8 @@ const Redis = require('./src/redis');
 
 const redis = new Redis();
 
-const dstPath = '/tmp/uploads/';
+const uploadPath = '/tmp/uploads/';
+const thumbnailPath = '/tmp/thumbnails/';
 
 const rabbit = new Rabbit();
 rabbit.start();
@@ -27,15 +28,28 @@ app.get('/', (req, res) => {
   res.send('Image service');
 });
 
-app.get('/images/:id', (req, res) => {
-  res.send('Image not ready');
+app.get('/images/:id/thumbnail', (req, res) => {
+  var id = req.params.id;
+  redis.get('' + id, function(err, status) {
+    if (err) throw err;
+    if (status === 'ready') {
+      res.type('png');
+      res.sendFile(thumbnailPath + 'thumbnail-' + id + '.png');
+    } else if (status === undefined) {
+      res.type('html');
+      res.send('Id not found');
+    } else {
+      res.type('html');
+      res.send('Image not ready');
+    }
+  });
 });
 
 app.post('/images', (req, res) => {
   var hrTime = process.hrtime.bigint();
   var id = hrTime;
   redis.setNew(id);
-  var imagePath = dstPath + 'upload-' + id;
+  var imagePath = uploadPath + 'upload-' + id;
   var stream = fs.createWriteStream(imagePath);
   req
     .on('data', chunk => {

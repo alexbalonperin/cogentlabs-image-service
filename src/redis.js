@@ -13,11 +13,23 @@ class Redis {
   }
 
   setNew (id) {
-    this.set(id, 'new')
+    if (this.get(id) !== null) {
+      this.set(id, 'new')
+    } else {
+      throw `trying to get unknown id ${id} in redis`
+    }
   }
 
   setPublished (id) {
-    this.set(id, 'published')
+    if (this.get(id) !== null) {
+      this.set(id, 'published')
+    } else {
+      throw `trying to get unknown id ${id} in redis`
+    }
+  }
+
+  get (id, cb) {
+    return redisClient.get(id, cb)
   }
 }
 

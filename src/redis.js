@@ -16,7 +16,7 @@ class Redis {
     if (this.get(id) !== null) {
       this.set(id, 'new')
     } else {
-      throw `trying to get unknown id ${id} in redis`
+      throw new Error(`trying to get unknown id ${id} in redis`)
     }
   }
 
@@ -24,7 +24,7 @@ class Redis {
     if (this.get(id) !== null) {
       this.set(id, 'published')
     } else {
-      throw `trying to get unknown id ${id} in redis`
+      throw new Error(`trying to get unknown id ${id} in redis`)
     }
   }
 

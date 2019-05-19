@@ -37,11 +37,11 @@ app.get('/images/:id/thumbnail', (req, res) => {
     if (err) throw err
     var data = JSON.parse(json)
     console.log(data)
-    if (data.status === 'ready') {
+    if (data && data.status === 'ready') {
       res.type('png')
       console.log('Getting file at path: ' + data.path)
       res.sendFile(data.path)
-    } else if (data.status === undefined) {
+    } else if (data && data.status === undefined) {
       res.type('html')
       res.send('Id not found')
     } else {

@@ -14,7 +14,7 @@ class Redis {
 
   setNew (id) {
     if (this.get(id) !== null) {
-      this.set(id, 'new')
+      this.set(id, { status: 'new' })
     } else {
       throw new Error(`trying to get unknown id ${id} in redis`)
     }
@@ -22,7 +22,7 @@ class Redis {
 
   setPublished (id) {
     if (this.get(id) !== null) {
-      this.set(id, 'published')
+      this.set(id, { status: 'published' })
     } else {
       throw new Error(`trying to get unknown id ${id} in redis`)
     }

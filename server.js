@@ -37,12 +37,12 @@ app.get('/', (req, res) => {
 
 app.get('/images/:id/thumbnail', (req, res) => {
   var id = req.params.id
-  redis.get('' + id, function (err, status) {
+  redis.get('' + id, function (err, data) {
     if (err) throw err
-    if (status === 'ready') {
+    if (data.status === 'ready') {
       res.type('png')
-      res.sendFile(thumbnailPath + 'thumbnail-' + id + '.png')
-    } else if (status === undefined) {
+      res.sendFile(data.path)
+    } else if (data.status === undefined) {
       res.type('html')
       res.send('Id not found')
     } else {

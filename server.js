@@ -39,6 +39,7 @@ app.get('/images/:id/thumbnail', (req, res) => {
     console.log(data)
     if (data.status === 'ready') {
       res.type('png')
+      console.log('Getting file at path: ' + data.path)
       res.sendFile(data.path)
     } else if (data.status === undefined) {
       res.type('html')

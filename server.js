@@ -33,8 +33,10 @@ app.get('/', (req, res) => {
 
 app.get('/images/:id/thumbnail', (req, res) => {
   var id = req.params.id
-  redis.get('' + id, function (err, data) {
+  redis.get('' + id, function (err, json) {
     if (err) throw err
+    var data = JSON.parse(json)
+    console.log(data)
     if (data.status === 'ready') {
       res.type('png')
       res.sendFile(data.path)

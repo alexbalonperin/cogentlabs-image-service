@@ -63,9 +63,10 @@ app.post('/images', (req, res) => {
     .on('end', () => {
       stream.end()
       var msg = new RabbitMQMessage('' + id, imagePath)
-      rabbit.publish(msg)
-      redis.setPublished(id)
-      res.send(JSON.stringify({ id: id.toString() }))
+      rabbit.publish(msg).then(() => {
+        redis.setPublished(id)
+        res.send(JSON.stringify({ id: id.toString() }))
+      })
     })
 })
 

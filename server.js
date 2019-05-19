@@ -13,13 +13,9 @@ const Redis = require('./src/redis')
 const redis = new Redis()
 
 const uploadPath = '/tmp/uploads/'
-const thumbnailPath = '/tmp/thumbnails/'
 
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath)
-}
-if (!fs.existsSync(thumbnailPath)) {
-  fs.mkdirSync(thumbnailPath)
 }
 
 const rabbit = new Rabbit()

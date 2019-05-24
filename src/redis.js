@@ -1,15 +1,15 @@
 'use strict'
 
-const redis = require('redis')
-
-const redisClient = redis.createClient({ host: 'redis' })
-redisClient.on('error', function (err) {
-  console.log('Error ' + err)
-})
-
 class Redis {
+  constructor (redisClient) {
+    redisClient.on('error', function (err) {
+      console.log('Error ' + err)
+    })
+
+    this.redisClient = redisClient
+  }
   set (key, value) {
-    redisClient.set(key, value, redis.print)
+    this.redisClient.set(key, value)
   }
 
   setNew (id) {
@@ -29,7 +29,7 @@ class Redis {
   }
 
   get (id, cb) {
-    return redisClient.get(id, cb)
+    return this.redisClient.get(id, cb)
   }
 }
 

@@ -1,6 +1,5 @@
 'use strict'
 
-const amqp = require('amqplib')
 const avro = require('avsc')
 
 const type = avro.Type.forSchema({
@@ -14,13 +13,14 @@ const PASSWORD = process.env.RABBIT_PASSWORD
 const queue = process.env.RABBIT_QUEUE
 
 class Rabbit {
-  constructor () {
+  constructor (amqp) {
+    this.amqp = amqp
     this.connection = null
   }
 
   async start () {
     console.log('establishing a connection with rabbitmq')
-    await amqp.connect(`amqp://${USER}:${PASSWORD}@${HOST}`).then(
+    await this.amqp.connect(`amqp://${USER}:${PASSWORD}@${HOST}`).then(
       conn => {
         console.log('connection established with rabbitmq')
         this.connection = conn

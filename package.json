@@ -6,7 +6,10 @@
   "main": "server.js",
   "license": "UNLICENSED",
   "engines": {
-    "node": "^10.15.3"
+    "node": "^12.3.1"
+  },
+  "standard": {
+    "env": [ "mocha" ]
   },
   "scripts": {
     "prettierjs": "prettier --parser=babel --write '**/*.js'",
@@ -16,7 +19,8 @@
     "stop": "pkill -f api-gateway &2> /dev/null",
     "dev": "npm stop & rm -rf localhost & npm start",
     "clean": "standard --fix & npm run prettierjs & npm run eslintfix",
-    "git-add": "git add -u"
+    "git-add": "git add -u",
+    "test": "mocha ./tests --recursive --exit"
   },
   "dependencies": {
     "express": "^4.16.4",
@@ -30,9 +34,11 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-node": "^9.0.1",
+    "mocha": "^6.1.4",
     "pre-commit": "^1.2.2",
     "prettier": "^1.17.0",
-    "standard": "*"
+    "standard": "*",
+    "supertest": "^4.0.2"
   },
   "repository": {
     "type": "git"

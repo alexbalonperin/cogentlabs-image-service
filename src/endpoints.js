@@ -26,7 +26,6 @@ class Endpoints {
     this.redis.get('' + id, (err, json) => {
       if (err) throw err
       var data = JSON.parse(json)
-      console.log(data)
       if (data && data.status === 'ready') {
         res.type('png')
         console.log('Getting file at path: ' + data.path)
@@ -44,13 +43,11 @@ class Endpoints {
   upload (req, res) {
     var fileExtension = req.header('FILE-EXTENSION')
     var id = process.hrtime.bigint()
-    console.log(this.redis)
     this.redis.setNew(id)
     var imagePath = uploadPath + 'upload-' + id + fileExtension
     var stream = fs.createWriteStream(imagePath)
     req
       .on('data', chunk => {
-        console.log('GETTING CHUNK: ' + chunk)
         stream.write(chunk)
       })
       .on('end', () => {
@@ -59,7 +56,6 @@ class Endpoints {
         this.rabbit.publish(msg).then(() => {
           this.redis.setPublished(id)
           res.send(JSON.stringify({ id: id.toString() }))
-          console.log('ALLA GOOD')
         })
       })
   }
